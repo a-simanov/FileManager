@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     qInfo() << "Приложение запущено";
-    left_folder_ = "C:/PRGM";
-    right_folder_ = "C:/Program Files";
+    left_folder_ = "/home/artem";
+    right_folder_ = "/home/artem/Project/Filemanager/FileManager";
 
     SetLeftFolder();
     SetRightFolder();
@@ -81,5 +81,48 @@ void MainWindow::on_btn_go_to_left_2_clicked()
 {
     right_folder_ = ui->right_path_le->text();
     SetRightFolder();
+}
+
+
+void MainWindow::on_btn_copy_clicked()
+{
+    QDir dir;
+    QString file;
+    QString destination;
+
+    if (is_right_folder) {
+        dir = right_folder_;
+        file = dir.filePath(right_list_[right_index_]);
+        destination = left_folder_;
+    } else {
+        dir = left_folder_;
+        file = dir.filePath(left_list_[left_index_]);
+        destination = right_folder_;
+    }
+
+    QFileInfo file_info(file);
+    QFile::copy(file, destination + "/" + file_info.fileName());
+
+    if (is_right_folder) {
+        SetLeftFolder();
+    } else {
+        SetRightFolder();
+    }
+}
+
+
+void MainWindow::on_right_list_widget_itemClicked(QListWidgetItem *item)
+{
+    right_index_ = item->listWidget()->currentRow();
+    is_right_folder = true;
+    is_left_folder = false;
+}
+
+
+void MainWindow::on_left_list_widget_itemClicked(QListWidgetItem *item)
+{
+    left_index_ = item->listWidget()->currentRow();
+    is_right_folder = false;
+    is_left_folder = true;
 }
 

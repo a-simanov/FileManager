@@ -32,15 +32,23 @@ private slots:
 
     void on_btn_go_to_left_2_clicked();
 
+    void on_btn_copy_clicked();
+
+    void on_right_list_widget_itemClicked(QListWidgetItem *item);
+
+    void on_left_list_widget_itemClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     QString left_folder_;
     QString right_folder_;
 
-    QList<QString> left_list_;
-    QList<QString> right_list_;
+    QStringList left_list_;
+    QStringList right_list_;
 
     int left_index_;
     int right_index_;
+    bool is_right_folder = false;
+    bool is_left_folder = false;
 };
 #endif // MAINWINDOW_H
