@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "createdirform.h"
+
 #include <QMainWindow>
 
 #include <QString>
@@ -20,7 +22,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void SetLeftFolder();
-    void SetRightFolder();
+    void SetRightFolder();    
+    void createDir();
 
 private slots:
 
@@ -38,6 +41,8 @@ private slots:
 
     void on_left_list_widget_itemClicked(QListWidgetItem *item);
 
+    void on_btn_create_folder_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString left_folder_;
@@ -50,5 +55,7 @@ private:
     int right_index_;
     bool is_right_folder = false;
     bool is_left_folder = false;
+
+    CreateDirForm dir_form_;
 };
 #endif // MAINWINDOW_H

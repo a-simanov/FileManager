@@ -40,6 +40,7 @@ public:
     QPushButton *btn_go_to_left;
     QListWidget *left_list_widget;
     QPushButton *btn_copy;
+    QPushButton *btn_create_folder;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -107,6 +108,11 @@ public:
 
         gridLayout->addWidget(btn_copy, 1, 0, 1, 1);
 
+        btn_create_folder = new QPushButton(centralwidget);
+        btn_create_folder->setObjectName("btn_create_folder");
+
+        gridLayout->addWidget(btn_create_folder, 1, 3, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -127,6 +133,7 @@ public:
         btn_go_to_left_2->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
         btn_go_to_left->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
         btn_copy->setText(QCoreApplication::translate("MainWindow", "Copy", nullptr));
+        btn_create_folder->setText(QCoreApplication::translate("MainWindow", "CreateFolder", nullptr));
     } // retranslateUi
 
 };

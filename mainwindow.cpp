@@ -16,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     SetLeftFolder();
     SetRightFolder();
+
+    connect(&dir_form_, &CreateDirForm::sendDirName, this, &MainWindow::createDir);
 }
 
 MainWindow::~MainWindow()
@@ -124,5 +126,34 @@ void MainWindow::on_left_list_widget_itemClicked(QListWidgetItem *item)
     left_index_ = item->listWidget()->currentRow();
     is_right_folder = false;
     is_left_folder = true;
+}
+
+void MainWindow::createDir() {
+
+    QString path;
+    QDir dir;
+    QString name = dir_form_.getDirName();
+
+    if (is_right_folder) {
+        path = right_folder_;
+    } else {
+        path = left_folder_;
+    }
+
+    path += "/" + name;
+
+
+    dir.mkdir(path);
+
+    if (is_right_folder) {
+        SetRightFolder();
+    } else {
+        SetLeftFolder();
+    }
+}
+
+void MainWindow::on_btn_create_folder_clicked()
+{
+    dir_form_.show();
 }
 
