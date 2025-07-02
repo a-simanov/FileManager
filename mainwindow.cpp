@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QDesktopServices>
 #include <QDebug>
+#include <QTreeView>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,7 +29,19 @@ MainWindow::~MainWindow()
 void MainWindow::SetLeftFolder() {
     QDir dir(left_folder_);
     ui->left_path_le->setText(left_folder_);
+
+    auto comp = [](const QString &str1, const QString &str2) {
+        if(str1.contains(".") && !str2.contains(".")) {
+            return str1 > str2;
+        } else if (!str1.contains(".") && str2.contains(".")) {
+            return str1 < str2;
+        }
+        return str1 < str2;
+
+    };
+
     left_list_ = dir.entryList();
+    std::sort(left_list_.begin(), left_list_.end(), comp);
     ui->left_list_widget->clear();
     ui->left_list_widget->addItems(left_list_);
 }
@@ -36,7 +49,20 @@ void MainWindow::SetLeftFolder() {
 void MainWindow::SetRightFolder() {
     QDir dir(right_folder_);
     ui->right_path_le->setText(right_folder_);
+
+    auto comp = [](const QString &str1, const QString &str2) {
+        if(str1.contains(".") && !str2.contains(".")) {
+            return str1 > str2;
+        } else if (!str1.contains(".") && str2.contains(".")) {
+            return str1 < str2;
+        }
+        return str1 < str2;
+
+    };
+
     right_list_ = dir.entryList();
+    std::sort(right_list_.begin(), right_list_.end(), comp);
+
     ui->right_list_widget->clear();
     ui->right_list_widget->addItems(right_list_);
 }
@@ -44,7 +70,6 @@ void MainWindow::SetRightFolder() {
 
 void MainWindow::on_left_list_widget_itemDoubleClicked(QListWidgetItem *item)
 {
-    qDebug() << "Выбран элемент левого списка:" << item->listWidget()->currentRow();
     left_index_ = item->listWidget()->currentRow();
     QDir dir(left_folder_);
     QFileInfo file_info(dir,left_list_[left_index_]);
@@ -59,7 +84,6 @@ void MainWindow::on_left_list_widget_itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::on_right_list_widget_itemDoubleClicked(QListWidgetItem *item)
 {
-    qDebug() << "Выбран элемент правого списка:" << item->listWidget()->currentRow();
     right_index_ = item->listWidget()->currentRow();
     QDir dir(right_folder_);
     QFileInfo file_info(dir.filePath(right_list_[right_index_]));
@@ -103,7 +127,11 @@ void MainWindow::on_btn_copy_clicked()
     }
 
     QFileInfo file_info(file);
-    QFile::copy(file, destination + "/" + file_info.fileName());
+
+    if (file_info.isFile()) {
+        QFile::copy(file, destination + "/" + file_info.fileName());
+    }
+
 
     if (is_right_folder) {
         SetLeftFolder();
@@ -155,5 +183,61 @@ void MainWindow::createDir() {
 void MainWindow::on_btn_create_folder_clicked()
 {
     dir_form_.show();
+}
+
+
+void MainWindow::on_btn_delete_clicked()
+{
+    QDir dir;
+    QFileInfo file_info;
+
+    if (is_right_folder) {
+        dir = right_folder_;
+        file_info = QFileInfo(dir.filePath(right_list_[right_index_]));
+    } else {
+        dir = left_folder_;
+        file_info = QFileInfo(dir.filePath(left_list_[left_index_]));
+    }
+
+    if(file_info.isFile()) {
+        QString name(file_info.filePath());
+        QFile(name).remove();
+    } else {
+        QString name(file_info.filePath());
+        QDir(name).removeRecursively();
+    }
+
+    if (is_right_folder) {
+        SetRightFolder();
+    } else {
+        SetLeftFolder();
+    }
+}
+
+
+void MainWindow::on_btn_replace_clicked()
+{
+    QDir dir;
+    QString file;
+    QString destination;
+
+    if (is_right_folder) {
+        dir = right_folder_;
+        file = dir.filePath(right_list_[right_index_]);
+        destination = left_folder_;
+    } else {
+        dir = left_folder_;
+        file = dir.filePath(left_list_[left_index_]);
+        destination = right_folder_;
+    }
+
+    QFileInfo file_info(file);
+
+    if (file_info.isFile()) {
+        QFile::copy(file, destination + "/" + file_info.fileName());
+        QFile(file).remove();
+    }
+    SetLeftFolder();
+    SetRightFolder();
 }
 

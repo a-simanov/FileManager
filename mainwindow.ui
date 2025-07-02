@@ -15,26 +15,26 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="3">
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLineEdit" name="right_path_le"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_go_to_left_2">
-          <property name="text">
-           <string>Перейти</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QListWidget" name="right_list_widget"/>
-      </item>
-     </layout>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="btn_delete">
+      <property name="text">
+       <string>Delete</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="btn_copy">
+      <property name="text">
+       <string>Copy</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QPushButton" name="btn_create_folder">
+      <property name="text">
+       <string>CreateFolder</string>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -57,17 +57,31 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="btn_copy">
-      <property name="text">
-       <string>Copy</string>
-      </property>
-     </widget>
+    <item row="0" column="3">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLineEdit" name="right_path_le"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_go_to_left_2">
+          <property name="text">
+           <string>Перейти</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QListWidget" name="right_list_widget"/>
+      </item>
+     </layout>
     </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="btn_create_folder">
+    <item row="2" column="3">
+     <widget class="QPushButton" name="btn_replace">
       <property name="text">
-       <string>CreateFolder</string>
+       <string>Replace</string>
       </property>
      </widget>
     </item>

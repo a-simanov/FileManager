@@ -29,18 +29,20 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout_2;
-    QHBoxLayout *horizontalLayout_2;
-    QLineEdit *right_path_le;
-    QPushButton *btn_go_to_left_2;
-    QListWidget *right_list_widget;
+    QPushButton *btn_delete;
+    QPushButton *btn_copy;
+    QPushButton *btn_create_folder;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLineEdit *left_path_le;
     QPushButton *btn_go_to_left;
     QListWidget *left_list_widget;
-    QPushButton *btn_copy;
-    QPushButton *btn_create_folder;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_2;
+    QLineEdit *right_path_le;
+    QPushButton *btn_go_to_left_2;
+    QListWidget *right_list_widget;
+    QPushButton *btn_replace;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -53,30 +55,20 @@ public:
         centralwidget->setObjectName("centralwidget");
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName("gridLayout");
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName("verticalLayout_2");
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName("horizontalLayout_2");
-        right_path_le = new QLineEdit(centralwidget);
-        right_path_le->setObjectName("right_path_le");
+        btn_delete = new QPushButton(centralwidget);
+        btn_delete->setObjectName("btn_delete");
 
-        horizontalLayout_2->addWidget(right_path_le);
+        gridLayout->addWidget(btn_delete, 2, 0, 1, 1);
 
-        btn_go_to_left_2 = new QPushButton(centralwidget);
-        btn_go_to_left_2->setObjectName("btn_go_to_left_2");
+        btn_copy = new QPushButton(centralwidget);
+        btn_copy->setObjectName("btn_copy");
 
-        horizontalLayout_2->addWidget(btn_go_to_left_2);
+        gridLayout->addWidget(btn_copy, 1, 0, 1, 1);
 
+        btn_create_folder = new QPushButton(centralwidget);
+        btn_create_folder->setObjectName("btn_create_folder");
 
-        verticalLayout_2->addLayout(horizontalLayout_2);
-
-        right_list_widget = new QListWidget(centralwidget);
-        right_list_widget->setObjectName("right_list_widget");
-
-        verticalLayout_2->addWidget(right_list_widget);
-
-
-        gridLayout->addLayout(verticalLayout_2, 0, 3, 1, 1);
+        gridLayout->addWidget(btn_create_folder, 1, 3, 1, 1);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName("verticalLayout");
@@ -103,15 +95,35 @@ public:
 
         gridLayout->addLayout(verticalLayout, 0, 0, 1, 1);
 
-        btn_copy = new QPushButton(centralwidget);
-        btn_copy->setObjectName("btn_copy");
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        right_path_le = new QLineEdit(centralwidget);
+        right_path_le->setObjectName("right_path_le");
 
-        gridLayout->addWidget(btn_copy, 1, 0, 1, 1);
+        horizontalLayout_2->addWidget(right_path_le);
 
-        btn_create_folder = new QPushButton(centralwidget);
-        btn_create_folder->setObjectName("btn_create_folder");
+        btn_go_to_left_2 = new QPushButton(centralwidget);
+        btn_go_to_left_2->setObjectName("btn_go_to_left_2");
 
-        gridLayout->addWidget(btn_create_folder, 1, 3, 1, 1);
+        horizontalLayout_2->addWidget(btn_go_to_left_2);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
+
+        right_list_widget = new QListWidget(centralwidget);
+        right_list_widget->setObjectName("right_list_widget");
+
+        verticalLayout_2->addWidget(right_list_widget);
+
+
+        gridLayout->addLayout(verticalLayout_2, 0, 3, 1, 1);
+
+        btn_replace = new QPushButton(centralwidget);
+        btn_replace->setObjectName("btn_replace");
+
+        gridLayout->addWidget(btn_replace, 2, 3, 1, 1);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -130,10 +142,12 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        btn_go_to_left_2->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
-        btn_go_to_left->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
+        btn_delete->setText(QCoreApplication::translate("MainWindow", "Delete", nullptr));
         btn_copy->setText(QCoreApplication::translate("MainWindow", "Copy", nullptr));
         btn_create_folder->setText(QCoreApplication::translate("MainWindow", "CreateFolder", nullptr));
+        btn_go_to_left->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
+        btn_go_to_left_2->setText(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\271\321\202\320\270", nullptr));
+        btn_replace->setText(QCoreApplication::translate("MainWindow", "Replace", nullptr));
     } // retranslateUi
 
 };

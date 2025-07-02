@@ -43,6 +43,10 @@ private slots:
 
     void on_btn_create_folder_clicked();
 
+    void on_btn_delete_clicked();
+
+    void on_btn_replace_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString left_folder_;
