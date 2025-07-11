@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDir>
+
 #include <QDesktopServices>
 #include <QDebug>
 #include <QTreeView>
@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     qInfo() << "Приложение запущено";
-    left_folder_ = "/home/artem";
-    right_folder_ = "/home/artem/Project/Filemanager/FileManager";
+    left_folder_ = "/home/artem/Project/Test/T1";
+    right_folder_ = "/home/artem/Project/Test";
 
     SetLeftFolder();
     SetRightFolder();
@@ -112,32 +112,37 @@ void MainWindow::on_btn_go_to_left_2_clicked()
 
 void MainWindow::on_btn_copy_clicked()
 {
-    QDir dir;
-    QString file;
-    QString destination;
+        QDir dir;
+        QString file;
+        QString destination;
 
-    if (is_right_folder) {
-        dir = right_folder_;
-        file = dir.filePath(right_list_[right_index_]);
-        destination = left_folder_;
-    } else {
-        dir = left_folder_;
-        file = dir.filePath(left_list_[left_index_]);
-        destination = right_folder_;
-    }
+        if (is_right_folder) {
+            dir = right_folder_;
+            file = dir.filePath(right_list_[right_index_]);
+            destination = left_folder_;
+        } else {
+            dir = left_folder_;
+            file = dir.filePath(left_list_[left_index_]);
+            destination = right_folder_;
+        }
 
-    QFileInfo file_info(file);
+        QFileInfo file_info(file);
 
-    if (file_info.isFile()) {
-        QFile::copy(file, destination + "/" + file_info.fileName());
-    }
+        if (file_info.isFile()) {
+            qDebug() << file;
+            QFile::copy(file, destination + "/" + file_info.fileName());
+        } else {            
+            QDir destination_dir = (dir == left_folder_) ? right_folder_ : left_folder_;
+            copyDir (destination_dir,file_info);
+
+        }
 
 
-    if (is_right_folder) {
-        SetLeftFolder();
-    } else {
-        SetRightFolder();
-    }
+        if (is_right_folder) {
+            SetLeftFolder();
+        } else {
+            SetRightFolder();
+        }
 }
 
 
@@ -241,3 +246,24 @@ void MainWindow::on_btn_replace_clicked()
     SetRightFolder();
 }
 
+void MainWindow::copyDir (QDir destination_dir, QFileInfo file_info) {
+    QDir source_dir{file_info.absoluteFilePath()};
+
+    destination_dir.mkdir(file_info.fileName());
+
+    QFileInfoList entries = source_dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+    for (const QFileInfo& entry : entries) {
+        if (entry.isDir()) {
+            qDebug() << entry.fileName();
+            QDir dest = destination_dir.filePath(file_info.fileName());
+            qDebug() << dest;
+            copyDir(dest, entry);
+        } else {
+            destination_dir = destination_dir.absoluteFilePath(file_info.fileName());
+            QString dest = destination_dir.path();
+            QFile::copy(entry.absoluteFilePath(), dest + "/" + entry.fileName());
+        }
+    }
+
+
+}

@@ -7,6 +7,7 @@
 
 #include <QString>
 #include <QListWidgetItem>
+#include <QDir>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -46,6 +47,8 @@ private slots:
     void on_btn_delete_clicked();
 
     void on_btn_replace_clicked();
+
+    void copyDir (QDir destination_dir, QFileInfo file_info);
 
 private:
     Ui::MainWindow *ui;
