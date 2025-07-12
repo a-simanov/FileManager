@@ -137,7 +137,6 @@ void MainWindow::on_btn_copy_clicked()
 
         }
 
-
         if (is_right_folder) {
             SetLeftFolder();
         } else {
@@ -241,7 +240,12 @@ void MainWindow::on_btn_replace_clicked()
     if (file_info.isFile()) {
         QFile::copy(file, destination + "/" + file_info.fileName());
         QFile(file).remove();
+    } else {
+        QDir destination_dir = (dir == left_folder_) ? right_folder_ : left_folder_;
+        copyDir (destination_dir,file_info);
+        QDir(file).removeRecursively();
     }
+
     SetLeftFolder();
     SetRightFolder();
 }
@@ -264,6 +268,4 @@ void MainWindow::copyDir (QDir destination_dir, QFileInfo file_info) {
             QFile::copy(entry.absoluteFilePath(), dest + "/" + entry.fileName());
         }
     }
-
-
 }
