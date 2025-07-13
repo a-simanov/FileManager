@@ -29,19 +29,9 @@ MainWindow::~MainWindow()
 void MainWindow::SetLeftFolder() {
     QDir dir(left_folder_);
     ui->left_path_le->setText(left_folder_);
+    dir.setSorting(QDir::Type | QDir::DirsFirst);
+    left_list_ = dir.entryList(QDir::AllEntries | QDir::NoDot);
 
-    auto comp = [](const QString &str1, const QString &str2) {
-        if(str1.contains(".") && !str2.contains(".")) {
-            return str1 > str2;
-        } else if (!str1.contains(".") && str2.contains(".")) {
-            return str1 < str2;
-        }
-        return str1 < str2;
-
-    };
-
-    left_list_ = dir.entryList();
-    std::sort(left_list_.begin(), left_list_.end(), comp);
     ui->left_list_widget->clear();
     ui->left_list_widget->addItems(left_list_);
 }
@@ -49,19 +39,9 @@ void MainWindow::SetLeftFolder() {
 void MainWindow::SetRightFolder() {
     QDir dir(right_folder_);
     ui->right_path_le->setText(right_folder_);
+    dir.setSorting(QDir::Type | QDir::DirsFirst);
+    right_list_ = dir.entryList(QDir::AllEntries | QDir::NoDot);
 
-    auto comp = [](const QString &str1, const QString &str2) {
-        if(str1.contains(".") && !str2.contains(".")) {
-            return str1 > str2;
-        } else if (!str1.contains(".") && str2.contains(".")) {
-            return str1 < str2;
-        }
-        return str1 < str2;
-
-    };
-
-    right_list_ = dir.entryList();
-    std::sort(right_list_.begin(), right_list_.end(), comp);
 
     ui->right_list_widget->clear();
     ui->right_list_widget->addItems(right_list_);
