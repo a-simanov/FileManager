@@ -111,10 +111,9 @@ void MainWindow::on_btn_copy_clicked()
         if (file_info.isFile()) {
             qDebug() << file;
             QFile::copy(file, destination + "/" + file_info.fileName());
-        } else {            
+        } else {
             QDir destination_dir = (dir == left_folder_) ? right_folder_ : left_folder_;
             copyDir (destination_dir,file_info);
-
         }
 
         if (is_right_folder) {
@@ -232,15 +231,19 @@ void MainWindow::on_btn_replace_clicked()
 
 void MainWindow::copyDir (QDir destination_dir, QFileInfo file_info) {
     QDir source_dir{file_info.absoluteFilePath()};
-
-    destination_dir.mkdir(file_info.fileName());
+    QString new_name;
+    if (QDir(destination_dir.path() + "/" + file_info.fileName()).exists()) {
+        destination_dir.mkdir(file_info.fileName() + "-copy");
+        new_name = destination_dir.path() + "/" + file_info.fileName() + "-copy";
+    } else {
+        destination_dir.mkdir(file_info.fileName());
+        new_name = destination_dir.path() + "/" + file_info.fileName();
+    }
 
     QFileInfoList entries = source_dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
     for (const QFileInfo& entry : entries) {
         if (entry.isDir()) {
-            qDebug() << entry.fileName();
-            QDir dest = destination_dir.filePath(file_info.fileName());
-            qDebug() << dest;
+            QDir dest(new_name);
             copyDir(dest, entry);
         } else {
             destination_dir = destination_dir.absoluteFilePath(file_info.fileName());
