@@ -12,13 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     qInfo() << "Приложение запущено";
-    left_folder_ = "/home/artem/Project/Test/T1";
-    right_folder_ = "/home/artem/Project/Test";
+    QDir current = QDir::currentPath();
+    left_folder_ = current.absolutePath();
+    right_folder_ = current.absolutePath();
 
     SetLeftFolder();
     SetRightFolder();
 
     connect(&dir_form_, &CreateDirForm::sendDirName, this, &MainWindow::createDir);
+    connect(&new_name_, &DialogRename::sendNewName, this, &MainWindow::renameObject);
 }
 
 MainWindow::~MainWindow()
@@ -252,3 +254,35 @@ void MainWindow::copyDir (QDir destination_dir, QFileInfo file_info) {
         }
     }
 }
+
+void MainWindow::on_btn_rename_clicked()
+{
+    new_name_.show();
+}
+
+void MainWindow::renameObject() {
+    QDir dir;
+    QString file;
+
+    if (is_right_folder) {
+        dir = right_folder_;
+        file = dir.filePath(right_list_[right_index_]);
+    } else {
+        dir = left_folder_;
+        file = dir.filePath(left_list_[left_index_]);
+    }
+
+    QFileInfo file_info{file};
+    QString new_name = file_info.path() + "/" + new_name_.getNewName();
+
+    bool done= QFile::rename(file_info.absoluteFilePath(), new_name);
+
+    qDebug() << done;
+
+    if (is_right_folder) {
+        SetRightFolder();
+    } else {
+        SetLeftFolder();
+    }
+}
+

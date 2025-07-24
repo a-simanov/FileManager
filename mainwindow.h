@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "createdirform.h"
+#include "dialogrename.h"
 
 #include <QMainWindow>
 
@@ -50,6 +51,10 @@ private slots:
 
     void copyDir (QDir destination_dir, QFileInfo file_info);
 
+    void on_btn_rename_clicked();
+
+    void renameObject();
+
 private:
     Ui::MainWindow *ui;
     QString left_folder_;
@@ -64,5 +69,6 @@ private:
     bool is_left_folder = false;
 
     CreateDirForm dir_form_;
+    DialogRename new_name_;
 };
 #endif // MAINWINDOW_H

@@ -53,13 +53,17 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../../createdirform.cpp \
+		../../dialogrename.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp moc_createdirform.cpp \
+		moc_dialogrename.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = createdirform.o \
+		dialogrename.o \
 		main.o \
 		mainwindow.o \
 		moc_createdirform.o \
+		moc_dialogrename.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/common/unix.conf \
@@ -131,7 +135,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/lex.prf \
 		../../../../FileManager.pro ../../createdirform.h \
+		../../dialogrename.h \
 		../../mainwindow.h ../../createdirform.cpp \
+		../../dialogrename.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp
 QMAKE_TARGET  = FileManager
@@ -142,7 +148,7 @@ TARGET        = FileManager
 first: all
 ####### Build rules
 
-FileManager: ui_createdirform.h ui_mainwindow.h $(OBJECTS)  
+FileManager: ui_createdirform.h ui_dialogrename.h ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET)  $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../../FileManager.pro /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/spec_pre.prf \
@@ -307,9 +313,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../createdirform.h ../../mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../createdirform.cpp ../../main.cpp ../../mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../createdirform.ui ../../mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../../createdirform.h ../../dialogrename.h ../../mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../createdirform.cpp ../../dialogrename.cpp ../../main.cpp ../../mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../createdirform.ui ../../dialogrename.ui ../../mainwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -341,16 +347,22 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -fPIC -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt6/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_createdirform.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_createdirform.cpp moc_dialogrename.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_createdirform.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_createdirform.cpp moc_dialogrename.cpp moc_mainwindow.cpp
 moc_createdirform.cpp: ../../createdirform.h \
 		moc_predefs.h \
 		/usr/lib/qt6/libexec/moc
 	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/artem/Project/Filemanager/FileManager/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/artem/Project/Filemanager/FileManager -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../createdirform.h -o moc_createdirform.cpp
 
+moc_dialogrename.cpp: ../../dialogrename.h \
+		moc_predefs.h \
+		/usr/lib/qt6/libexec/moc
+	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/artem/Project/Filemanager/FileManager/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/artem/Project/Filemanager/FileManager -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../dialogrename.h -o moc_dialogrename.cpp
+
 moc_mainwindow.cpp: ../../mainwindow.h \
 		../../createdirform.h \
+		../../dialogrename.h \
 		moc_predefs.h \
 		/usr/lib/qt6/libexec/moc
 	/usr/lib/qt6/libexec/moc $(DEFINES) --include /home/artem/Project/Filemanager/FileManager/build/Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -I/home/artem/Project/Filemanager/FileManager -I/usr/include/x86_64-linux-gnu/qt6 -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets -I/usr/include/x86_64-linux-gnu/qt6/QtGui -I/usr/include/x86_64-linux-gnu/qt6/QtCore -I. -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../../mainwindow.h -o moc_mainwindow.cpp
@@ -359,12 +371,16 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_createdirform.h ui_mainwindow.h
+compiler_uic_make_all: ui_createdirform.h ui_dialogrename.h ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_createdirform.h ui_mainwindow.h
+	-$(DEL_FILE) ui_createdirform.h ui_dialogrename.h ui_mainwindow.h
 ui_createdirform.h: ../../createdirform.ui \
 		/usr/lib/qt6/libexec/uic
 	/usr/lib/qt6/libexec/uic ../../createdirform.ui -o ui_createdirform.h
+
+ui_dialogrename.h: ../../dialogrename.ui \
+		/usr/lib/qt6/libexec/uic
+	/usr/lib/qt6/libexec/uic ../../dialogrename.ui -o ui_dialogrename.h
 
 ui_mainwindow.h: ../../mainwindow.ui \
 		/usr/lib/qt6/libexec/uic
@@ -384,17 +400,26 @@ createdirform.o: ../../createdirform.cpp ../../createdirform.h \
 		ui_createdirform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o createdirform.o ../../createdirform.cpp
 
+dialogrename.o: ../../dialogrename.cpp ../../dialogrename.h \
+		ui_dialogrename.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialogrename.o ../../dialogrename.cpp
+
 main.o: ../../main.cpp ../../mainwindow.h \
-		../../createdirform.h
+		../../createdirform.h \
+		../../dialogrename.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../createdirform.h \
+		../../dialogrename.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
 
 moc_createdirform.o: moc_createdirform.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_createdirform.o moc_createdirform.cpp
+
+moc_dialogrename.o: moc_dialogrename.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dialogrename.o moc_dialogrename.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

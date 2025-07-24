@@ -10,15 +10,18 @@ CONFIG += c++17
 
 SOURCES += \
     createdirform.cpp \
+    dialogrename.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     createdirform.h \
+    dialogrename.h \
     mainwindow.h
 
 FORMS += \
     createdirform.ui \
+    dialogrename.ui \
     mainwindow.ui
 
 # Default rules for deployment.

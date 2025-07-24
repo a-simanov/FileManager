@@ -26,7 +26,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_MainWindow_t {
-    uint offsetsAndSizes[38];
+    uint offsetsAndSizes[42];
     char stringdata0[11];
     char stringdata1[38];
     char stringdata2[1];
@@ -46,6 +46,8 @@ struct qt_meta_stringdata_MainWindow_t {
     char stringdata16[16];
     char stringdata17[10];
     char stringdata18[10];
+    char stringdata19[22];
+    char stringdata20[13];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_MainWindow_t::offsetsAndSizes) + ofs), len 
@@ -69,7 +71,9 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
         QT_MOC_LITERAL(332, 4),  // "QDir"
         QT_MOC_LITERAL(337, 15),  // "destination_dir"
         QT_MOC_LITERAL(353, 9),  // "QFileInfo"
-        QT_MOC_LITERAL(363, 9)   // "file_info"
+        QT_MOC_LITERAL(363, 9),  // "file_info"
+        QT_MOC_LITERAL(373, 21),  // "on_btn_rename_clicked"
+        QT_MOC_LITERAL(395, 12)   // "renameObject"
     },
     "MainWindow",
     "on_left_list_widget_itemDoubleClicked",
@@ -89,7 +93,9 @@ Q_CONSTINIT static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_Main
     "QDir",
     "destination_dir",
     "QFileInfo",
-    "file_info"
+    "file_info",
+    "on_btn_rename_clicked",
+    "renameObject"
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
@@ -100,7 +106,7 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -108,17 +114,19 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   80,    2, 0x08,    1 /* Private */,
-       5,    1,   83,    2, 0x08,    3 /* Private */,
-       6,    0,   86,    2, 0x08,    5 /* Private */,
-       7,    0,   87,    2, 0x08,    6 /* Private */,
-       8,    0,   88,    2, 0x08,    7 /* Private */,
-       9,    1,   89,    2, 0x08,    8 /* Private */,
-      10,    1,   92,    2, 0x08,   10 /* Private */,
-      11,    0,   95,    2, 0x08,   12 /* Private */,
-      12,    0,   96,    2, 0x08,   13 /* Private */,
-      13,    0,   97,    2, 0x08,   14 /* Private */,
-      14,    2,   98,    2, 0x08,   15 /* Private */,
+       1,    1,   92,    2, 0x08,    1 /* Private */,
+       5,    1,   95,    2, 0x08,    3 /* Private */,
+       6,    0,   98,    2, 0x08,    5 /* Private */,
+       7,    0,   99,    2, 0x08,    6 /* Private */,
+       8,    0,  100,    2, 0x08,    7 /* Private */,
+       9,    1,  101,    2, 0x08,    8 /* Private */,
+      10,    1,  104,    2, 0x08,   10 /* Private */,
+      11,    0,  107,    2, 0x08,   12 /* Private */,
+      12,    0,  108,    2, 0x08,   13 /* Private */,
+      13,    0,  109,    2, 0x08,   14 /* Private */,
+      14,    2,  110,    2, 0x08,   15 /* Private */,
+      19,    0,  115,    2, 0x08,   18 /* Private */,
+      20,    0,  116,    2, 0x08,   19 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -132,6 +140,8 @@ Q_CONSTINIT static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 15, 0x80000000 | 17,   16,   18,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -172,7 +182,11 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'copyDir'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QFileInfo, std::false_type>
+        QtPrivate::TypeAndForceComplete<QFileInfo, std::false_type>,
+        // method 'on_btn_rename_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'renameObject'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -194,6 +208,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->on_btn_delete_clicked(); break;
         case 9: _t->on_btn_replace_clicked(); break;
         case 10: _t->copyDir((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QFileInfo>>(_a[2]))); break;
+        case 11: _t->on_btn_rename_clicked(); break;
+        case 12: _t->renameObject(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -229,13 +245,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }
