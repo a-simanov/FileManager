@@ -128,17 +128,25 @@ void MainWindow::on_btn_copy_clicked()
 
 void MainWindow::on_right_list_widget_itemClicked(QListWidgetItem *item)
 {
+    QDir dir = right_folder_;
     right_index_ = item->listWidget()->currentRow();
     is_right_folder = true;
     is_left_folder = false;
+    QFileInfo file_info = QFileInfo(dir.filePath(right_list_[right_index_]));
+    file_name_ = file_info.fileName();
+    new_name_.ui->le_new_name->setText(file_name_);
 }
 
 
 void MainWindow::on_left_list_widget_itemClicked(QListWidgetItem *item)
 {
+    QDir dir = left_folder_;
     left_index_ = item->listWidget()->currentRow();
     is_right_folder = false;
     is_left_folder = true;
+    QFileInfo file_info = QFileInfo(dir.filePath(left_list_[left_index_]));
+    file_name_ = file_info.fileName();
+    new_name_.ui->le_new_name->setText(file_name_);
 }
 
 void MainWindow::createDir() {

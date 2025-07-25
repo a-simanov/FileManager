@@ -11,6 +11,8 @@ class DialogRename : public QDialog
 {
     Q_OBJECT
 
+    friend class MainWindow;
+
 public:
     explicit DialogRename(QWidget *parent = nullptr);
     ~DialogRename();

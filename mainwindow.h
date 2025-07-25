@@ -3,6 +3,7 @@
 
 #include "createdirform.h"
 #include "dialogrename.h"
+#include "ui_dialogrename.h"
 
 #include <QMainWindow>
 
@@ -19,6 +20,8 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+    friend class DialogRename;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -59,6 +62,7 @@ private:
     Ui::MainWindow *ui;
     QString left_folder_;
     QString right_folder_;
+    QString file_name_;
 
     QStringList left_list_;
     QStringList right_list_;
