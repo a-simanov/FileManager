@@ -23,7 +23,7 @@
          <widget class="QLineEdit" name="right_path_le"/>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_go_to_left_2">
+         <widget class="QPushButton" name="btn_go_to_right">
           <property name="text">
            <string>Перейти</string>
           </property>

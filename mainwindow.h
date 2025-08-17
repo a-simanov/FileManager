@@ -5,8 +5,9 @@
 #include "dialogrename.h"
 #include "ui_dialogrename.h"
 
-#include <QMainWindow>
 
+#include <QMainWindow>
+#include <QProcess>
 #include <QString>
 #include <QListWidgetItem>
 #include <QDir>
@@ -20,8 +21,6 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
-    friend class DialogRename;
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -38,7 +37,7 @@ private slots:
 
     void on_btn_go_to_left_clicked();
 
-    void on_btn_go_to_left_2_clicked();
+    void on_btn_go_to_right_clicked();
 
     void on_btn_copy_clicked();
 

@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    qInfo() << "Приложение завершено";
     delete ui;
 }
 
@@ -85,7 +86,7 @@ void MainWindow::on_btn_go_to_left_clicked()
 }
 
 
-void MainWindow::on_btn_go_to_left_2_clicked()
+void MainWindow::on_btn_go_to_right_clicked()
 {
     right_folder_ = ui->right_path_le->text();
     SetRightFolder();
