@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     left_folder_ = current.absolutePath();
     right_folder_ = current.absolutePath();
 
-    SetLeftFolder();
-    SetRightFolder();
+    SetFolder(left_folder_, left_list_, ui->left_list_widget,ui->left_path_le);
+    SetFolder(right_folder_, right_list_, ui->right_list_widget,ui->right_path_le);
 
     connect(&dir_form_, &CreateDirForm::sendDirName, this, &MainWindow::createDir);
     connect(&new_name_, &DialogRename::sendNewName, this, &MainWindow::renameObject);
@@ -29,69 +29,62 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::SetLeftFolder() {
-    QDir dir(left_folder_);
-    ui->left_path_le->setText(left_folder_);
+void MainWindow::SetFolder(QString& folder, QStringList& list, QListWidget* widget, QLineEdit* le) {
+    QDir dir(folder);
+    le->setText(folder);
     dir.setSorting(QDir::Type | QDir::DirsFirst);
-    left_list_ = dir.entryList(QDir::AllEntries | QDir::NoDot);
+    list = dir.entryList(QDir::AllEntries | QDir::NoDot);
 
-    ui->left_list_widget->clear();
-    ui->left_list_widget->addItems(left_list_);
+    widget->clear();
+    widget->addItems(list);
 }
 
-void MainWindow::SetRightFolder() {
-    QDir dir(right_folder_);
-    ui->right_path_le->setText(right_folder_);
-    dir.setSorting(QDir::Type | QDir::DirsFirst);
-    right_list_ = dir.entryList(QDir::AllEntries | QDir::NoDot);
-
-
-    ui->right_list_widget->clear();
-    ui->right_list_widget->addItems(right_list_);
-}
-
-
-void MainWindow::on_left_list_widget_itemDoubleClicked(QListWidgetItem *item)
-{
-    left_index_ = item->listWidget()->currentRow();
-    QDir dir(left_folder_);
-    QFileInfo file_info(dir,left_list_[left_index_]);
+void MainWindow::ProcessDoubleClicked(int& idx, QString& folder,
+                                      QStringList& list, QListWidget* widget,
+                                      QLineEdit* le, QListWidgetItem *item) {
+    idx = item->listWidget()->currentRow();
+    QDir dir(folder);
+    QFileInfo file_info(dir,list[idx]);
     if (file_info.isDir()) {
-        left_folder_ = file_info.absoluteFilePath();
-        SetLeftFolder();
+        folder = file_info.absoluteFilePath();
+        SetFolder(folder, list, widget, le);
     } else {
         QDesktopServices::openUrl(QUrl::fromLocalFile(file_info.absoluteFilePath()));
     }
+}
+
+void MainWindow::on_left_list_widget_itemDoubleClicked(QListWidgetItem *item)
+{
+    ProcessDoubleClicked(left_index_, left_folder_, left_list_, ui->left_list_widget,ui->left_path_le, item);
 }
 
 
 void MainWindow::on_right_list_widget_itemDoubleClicked(QListWidgetItem *item)
 {
-    right_index_ = item->listWidget()->currentRow();
-    QDir dir(right_folder_);
-    QFileInfo file_info(dir.filePath(right_list_[right_index_]));
-    if (file_info.isDir()) {
-        right_folder_ = file_info.absoluteFilePath();
-        SetRightFolder();
-    } else {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(file_info.absoluteFilePath()));
-    }
+    ProcessDoubleClicked(right_index_, right_folder_, right_list_, ui->right_list_widget,ui->right_path_le, item);
 }
 
 
 void MainWindow::on_btn_go_to_left_clicked()
 {
     left_folder_ = ui->left_path_le->text();
-    SetLeftFolder();
+    SetFolder(left_folder_, left_list_, ui->left_list_widget,ui->left_path_le);
 }
 
 
 void MainWindow::on_btn_go_to_right_clicked()
 {
     right_folder_ = ui->right_path_le->text();
-    SetRightFolder();
+    SetFolder(right_folder_, right_list_, ui->right_list_widget,ui->right_path_le);
 }
 
+void MainWindow::SetFolderByFlag() {
+    if (is_right_folder) {
+        SetFolder(right_folder_, right_list_, ui->right_list_widget,ui->right_path_le);
+    } else {
+        SetFolder(left_folder_, left_list_, ui->left_list_widget,ui->left_path_le);
+    }
+}
 
 void MainWindow::on_btn_copy_clicked()
 {
@@ -120,34 +113,31 @@ void MainWindow::on_btn_copy_clicked()
         }
 
         if (is_right_folder) {
-            SetLeftFolder();
+            SetFolder(left_folder_, left_list_, ui->left_list_widget,ui->left_path_le);
         } else {
-            SetRightFolder();
+            SetFolder(right_folder_, right_list_, ui->right_list_widget,ui->right_path_le);
         }
 }
 
+void MainWindow::ProcessItemClicked (QString& folder, QListWidgetItem *item, bool& r_flag, bool& l_flag, QStringList& list, int& idx) {
+    QDir dir = folder;
+    idx = item->listWidget()->currentRow();
+    r_flag = true;
+    l_flag = false;
+    QFileInfo file_info = QFileInfo(dir.filePath(list[idx]));
+    file_name_ = file_info.fileName();
+    new_name_.ui->le_new_name->setText(file_name_);
+}
 
 void MainWindow::on_right_list_widget_itemClicked(QListWidgetItem *item)
 {
-    QDir dir = right_folder_;
-    right_index_ = item->listWidget()->currentRow();
-    is_right_folder = true;
-    is_left_folder = false;
-    QFileInfo file_info = QFileInfo(dir.filePath(right_list_[right_index_]));
-    file_name_ = file_info.fileName();
-    new_name_.ui->le_new_name->setText(file_name_);
+    ProcessItemClicked(right_folder_, item, is_right_folder, is_left_folder, right_list_, right_index_);
 }
 
 
 void MainWindow::on_left_list_widget_itemClicked(QListWidgetItem *item)
 {
-    QDir dir = left_folder_;
-    left_index_ = item->listWidget()->currentRow();
-    is_right_folder = false;
-    is_left_folder = true;
-    QFileInfo file_info = QFileInfo(dir.filePath(left_list_[left_index_]));
-    file_name_ = file_info.fileName();
-    new_name_.ui->le_new_name->setText(file_name_);
+    ProcessItemClicked(left_folder_, item, is_left_folder, is_right_folder, left_list_, left_index_);
 }
 
 void MainWindow::createDir() {
@@ -163,15 +153,9 @@ void MainWindow::createDir() {
     }
 
     path += "/" + name;
-
-
     dir.mkdir(path);
 
-    if (is_right_folder) {
-        SetRightFolder();
-    } else {
-        SetLeftFolder();
-    }
+    SetFolderByFlag();
 }
 
 void MainWindow::on_btn_create_folder_clicked()
@@ -201,11 +185,7 @@ void MainWindow::on_btn_delete_clicked()
         QDir(name).removeRecursively();
     }
 
-    if (is_right_folder) {
-        SetRightFolder();
-    } else {
-        SetLeftFolder();
-    }
+    SetFolderByFlag();
 }
 
 
@@ -236,8 +216,8 @@ void MainWindow::on_btn_replace_clicked()
         QDir(file).removeRecursively();
     }
 
-    SetLeftFolder();
-    SetRightFolder();
+    SetFolder(left_folder_, left_list_, ui->left_list_widget,ui->left_path_le);
+    SetFolder(right_folder_, right_list_, ui->right_list_widget,ui->right_path_le);
 }
 
 void MainWindow::copyDir (QDir destination_dir, QFileInfo file_info) {
@@ -288,10 +268,6 @@ void MainWindow::renameObject() {
 
     qDebug() << done;
 
-    if (is_right_folder) {
-        SetRightFolder();
-    } else {
-        SetLeftFolder();
-    }
+    SetFolderByFlag();
 }
 

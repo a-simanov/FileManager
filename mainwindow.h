@@ -25,8 +25,10 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void SetLeftFolder();
-    void SetRightFolder();    
+    void SetFolder(QString& folder, QStringList& list, QListWidget* widget, QLineEdit* le);
+    void SetFolderByFlag();
+    void ProcessDoubleClicked(int& idx, QString& folder, QStringList& list, QListWidget* widget, QLineEdit* le, QListWidgetItem *item);
+    void ProcessItemClicked (QString& folder, QListWidgetItem *item, bool& r_flag, bool& l_flag, QStringList& list, int& idx);
     void createDir();
 
 private slots:
