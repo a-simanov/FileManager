@@ -14,12 +14,9 @@ class CreateDirForm : public QDialog
 public:
     explicit CreateDirForm(QWidget *parent = nullptr);
     ~CreateDirForm();
-    QString getDirName() {
-        return dir_name_;
-    };
 
 signals:
-    void sendDirName();
+    void sendDirName(const QString& dir_name);
 
 private slots:
     void on_buttonBox_accepted();

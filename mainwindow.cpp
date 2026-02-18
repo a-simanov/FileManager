@@ -140,11 +140,11 @@ void MainWindow::on_left_list_widget_itemClicked(QListWidgetItem *item)
     ProcessItemClicked(left_folder_, item, is_left_folder, is_right_folder, left_list_, left_index_);
 }
 
-void MainWindow::createDir() {
+void MainWindow::createDir(const QString& dir_name) {
 
     QString path;
     QDir dir;
-    QString name = dir_form_.getDirName();
+    QString name = dir_name;
 
     if (is_right_folder) {
         path = right_folder_;
@@ -249,7 +249,7 @@ void MainWindow::on_btn_rename_clicked()
     new_name_.show();
 }
 
-void MainWindow::renameObject() {
+void MainWindow::renameObject(const QString& name) {
     QDir dir;
     QString file;
 
@@ -262,7 +262,7 @@ void MainWindow::renameObject() {
     }
 
     QFileInfo file_info{file};
-    QString new_name = file_info.path() + "/" + new_name_.getNewName();
+    QString new_name = file_info.path() + "/" + name;
 
     bool done= QFile::rename(file_info.absoluteFilePath(), new_name);
 

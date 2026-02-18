@@ -17,6 +17,6 @@ void DialogRename::on_buttonBox_accepted()
 {
     new_name_ = ui->le_new_name->text();
     ui->le_new_name->clear();
-    emit sendNewName();
+    emit sendNewName(new_name_);
 }
 

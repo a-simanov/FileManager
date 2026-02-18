@@ -29,8 +29,9 @@ public:
     void SetFolderByFlag();
     void ProcessDoubleClicked(int& idx, QString& folder, QStringList& list, QListWidget* widget, QLineEdit* le, QListWidgetItem *item);
     void ProcessItemClicked (QString& folder, QListWidgetItem *item, bool& r_flag, bool& l_flag, QStringList& list, int& idx);
-    void createDir();
-
+    void createDir(const QString& dir_name);
+    void renameObject(const QString& name);
+    void copyDir (QDir destination_dir, QFileInfo file_info);
 private slots:
 
     void on_left_list_widget_itemDoubleClicked(QListWidgetItem *item);
@@ -51,13 +52,9 @@ private slots:
 
     void on_btn_delete_clicked();
 
-    void on_btn_replace_clicked();
-
-    void copyDir (QDir destination_dir, QFileInfo file_info);
+    void on_btn_replace_clicked();    
 
     void on_btn_rename_clicked();
-
-    void renameObject();
 
 private:
     Ui::MainWindow *ui;

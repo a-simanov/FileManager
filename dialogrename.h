@@ -16,11 +16,8 @@ class DialogRename : public QDialog
 public:
     explicit DialogRename(QWidget *parent = nullptr);
     ~DialogRename();
-    QString getNewName () {
-        return new_name_;
-    }
 signals:
-    void sendNewName();
+    void sendNewName(const QString& new_name);
 
 private slots:
     void on_buttonBox_accepted();

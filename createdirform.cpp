@@ -17,6 +17,6 @@ void CreateDirForm::on_buttonBox_accepted()
 {
     dir_name_ = ui->le_dir_name->text();
     ui->le_dir_name->clear();
-    emit sendDirName();
+    emit sendDirName(dir_name_);
 }
 
